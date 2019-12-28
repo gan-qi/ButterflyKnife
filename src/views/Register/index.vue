@@ -10,7 +10,7 @@
         </el-col>
         <el-col :span="12">
           <div class="cardRight">
-            <span>登陆</span>
+            <span>注 册</span>
             <el-form ref="ruleForm" :model="form" :rules="rules">
               <el-form-item prop="name" required>
                 <el-input v-model="form.name" placeholder="用户名"></el-input>
@@ -22,16 +22,23 @@
                   placeholder="密码"
                 ></el-input>
               </el-form-item>
+              <el-form-item prop="repassword" required>
+                <el-input
+                  v-model="form.repassword"
+                  type="password"
+                  placeholder="确认密码"
+                ></el-input>
+              </el-form-item>
               <el-form-item>
                 <el-button
                   type="primary"
                   @click="submitForm('ruleForm')"
                   class="loginBtn"
                 >
-                  登 陆
+                  注 册
                 </el-button>
-                <div class="tip" @click="register">
-                  还没账号？注册
+                <div class="tip" @click="login">
+                  已有账号？登陆
                 </div>
               </el-form-item>
             </el-form>
@@ -45,14 +52,39 @@
 <script>
 export default {
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.form.repassword !== "") {
+          this.$refs.ruleForm.validateField("repassword");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.form.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       form: {
         name: "",
-        password: ""
+        password: "",
+        repassword: ""
       },
       rules: {
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [
+          { validator: validatePass, required: true, trigger: "blur" }
+        ],
+        repassword: [
+          { validator: validatePass2, required: true, trigger: "blur" }
+        ]
       }
     };
   },
@@ -60,18 +92,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.form.name === "admin" && this.form.password === "admin") {
-            this.$router.push("/");
-          } else {
-            this.$message.error("抱歉，登陆失败...");
-          }
+          this.$router.push("/login");
         } else {
+          console.log("error submit!!");
           return false;
         }
       });
     },
-    register() {
-      this.$router.push("/register");
+    login() {
+      this.$router.push("/login");
     }
   }
 };
@@ -96,7 +125,7 @@ div.cardLeft span {
   margin-top: 30px;
 }
 div.cardRight {
-  padding: 230px 180px;
+  padding: 200px 180px;
   border: none;
   border-left: 1px solid #dcdfe6;
   height: 100%;

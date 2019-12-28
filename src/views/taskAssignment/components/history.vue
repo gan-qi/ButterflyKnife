@@ -77,7 +77,7 @@
             <el-input v-model="taskForm.title" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="描述" :label-width="formLabelWidth">
-            <el-input v-model="taskForm.desc" autocomplete="off"></el-input>
+            <el-input v-model="taskForm.desc" autocomplete="off" type="textarea" :rows="5"></el-input>
           </el-form-item>
           <el-form-item label="颜色" :label-width="formLabelWidth">
             <el-color-picker v-model="taskForm.color"></el-color-picker>

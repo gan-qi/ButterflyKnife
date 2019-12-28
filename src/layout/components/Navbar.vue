@@ -5,27 +5,39 @@
         <a class="imgLogo"><img src="@/assets/logo.png" class="imgLogo"/></a>
       </li>
       <li>
-        <router-link to="/" class="active">
+        <router-link to="/" :class="{ active: this.$store.state.active.home }">
           首页
         </router-link>
       </li>
       <li>
-        <router-link to="/task">
+        <router-link
+          to="/task"
+          :class="{ active: this.$store.state.active.task }"
+        >
           任务
         </router-link>
       </li>
       <li>
-        <router-link to="/department">
+        <router-link
+          to="/department"
+          :class="{ active: this.$store.state.active.department }"
+        >
           部门
         </router-link>
       </li>
       <li>
-        <router-link to="/taskassignment">
+        <router-link
+          to="/taskassignment"
+          :class="{ active: this.$store.state.active.taskassignment }"
+        >
           任务委派
         </router-link>
       </li>
       <li>
-        <router-link to="/feedback">
+        <router-link
+          to="/feedback"
+          :class="{ active: this.$store.state.active.feedback }"
+        >
           反馈
         </router-link>
       </li>
@@ -37,9 +49,11 @@
                 <img src="@/assets/user.png" alt="avatar" class="avatar" />
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>修改密码</el-dropdown-item><br />
+                <span @click="settings">
+                  <el-dropdown-item>设置</el-dropdown-item><br />
+                </span>
                 <span @click="logout">
-                  <el-dropdown-item>账户注销</el-dropdown-item>
+                  <el-dropdown-item>登出</el-dropdown-item>
                 </span>
               </el-dropdown-menu>
             </el-dropdown>
@@ -55,6 +69,9 @@ export default {
   methods: {
     logout() {
       this.$router.push("/login");
+    },
+    settings() {
+      this.$router.push("/settings");
     }
   }
 };
@@ -93,10 +110,14 @@ li a:not(.imgLogo):not(.avatar) {
 li a:hover {
   cursor: pointer;
   color: #303133;
+}
+
+li a:hover:not(.avatar):not(.imgLogo):not(.active) {
   background-color: #f2f2f2;
 }
 li a.active {
   color: #303133;
+  background-color: #f2f2f2;
 }
 .right {
   float: right;
