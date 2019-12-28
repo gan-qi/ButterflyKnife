@@ -61,6 +61,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.form.name === "admin" && this.form.password === "admin") {
+            this.$store.commit("changeLoginStatus")
             this.$router.push("/");
           } else {
             this.$message.error("抱歉，登陆失败...");

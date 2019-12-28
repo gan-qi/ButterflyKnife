@@ -15,10 +15,15 @@ const routes = [
     children: [
       {
         path: "/",
+        name: "Home",
         component: () => import("../views/User/index"),
         meta: { title: "home" }
       }
     ]
+  },
+  {
+    path: "/404",
+    component: () => import("../views/NotFoundPage/index")
   },
   {
     path: "/task",
@@ -103,24 +108,18 @@ const routes = [
       first: true
     }
   },
-  {
-    path: "*",
-    name: "404",
-    component: NotFoundPage,
-    meta: {
-      title: 404
-    }
-  }
+  { path: "*", redirect: "/404", hidden: true }
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  //mode: "history",
   base: process.env.BASE_URL,
   routes
 });
 
 router.beforeEach((to, from, next) => {
   // 监听登陆状态
+  console.log(to)
   if (store.state.login) {
     if (to.meta.title) {
       document.title = `${to.meta.title} - Butterfly Knife`;

@@ -53,12 +53,14 @@ export default {
     pieChart,
     Histogram
   },
+  /*
   beforeCreate() {
     document.querySelector("body").setAttribute("style", "background:#f2f2f2");
   },
   beforeDestroy() {
     document.querySelector("body").setAttribute("style", "background:#fff");
   }
+  */
 };
 </script>
 
