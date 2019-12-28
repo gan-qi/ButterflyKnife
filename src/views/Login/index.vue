@@ -1,11 +1,11 @@
 <template>
   <div class="loginContainer">
-    <el-card shadow="hover">
+    <el-card shadow="always" class="boxCard">
       <el-row>
         <el-col :span="12">
           <div class="cardLeft">
-            <img src="../../assets/logoBig.png" alt="login" />
-            <span>GQToDo</span>
+            <img src="../../assets/logo.png" alt="login" />
+            <span>Butterfly Knife</span>
           </div>
         </el-col>
         <el-col :span="12">
@@ -65,28 +65,21 @@ export default {
       });
     }
   },
-  beforeCreate() {
-    document.querySelector("body").setAttribute("style", "background:#f2f2f2");
-  },
-  beforeDestroy() {
-    document.querySelector("body").setAttribute("style", "background:#fff");
-  }
 };
 </script>
 
 <style scoped>
 div.loginContainer {
-  padding: 100px 200px;
+  padding: 50px 200px;
   border-radius: 40px;
 }
 .boxCard {
-  padding: 100px 50px;
-  width: 400px;
-  margin: auto;
+  height: calc(100vh - 150px);
 }
 div.cardLeft {
-  padding: 180px;
+  padding: 250px 180px;
   text-align: center;
+  height: 100%;
 }
 div.cardLeft span {
   display: block;
@@ -94,9 +87,10 @@ div.cardLeft span {
   margin-top: 30px;
 }
 div.cardRight {
-  padding: 180px;
+  padding: 250px 180px;
   border: none;
   border-left: 1px solid #dcdfe6;
+  height: 100%;
 }
 div.cardRight span {
   font-size: 30px;

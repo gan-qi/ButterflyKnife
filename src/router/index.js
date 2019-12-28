@@ -43,7 +43,7 @@ const routes = [
         path: '/department',
         name: "Department",
         component: () => import('../views/Department/index'),
-        meta: { title: '任务' }
+        meta: { title: '部门' }
       }
     ]
   },
@@ -56,7 +56,7 @@ const routes = [
         path: '/taskassignment',
         name: "taskAssignment",
         component: () => import('../views/taskAssignment/index'),
-        meta: { title: '任务' }
+        meta: { title: '任务指派' }
       }
     ]
   },
@@ -69,7 +69,7 @@ const routes = [
         path: '/feedback',
         name: "Feedback",
         component: () => import('../views/Feedback/index'),
-        meta: { title: '任务' }
+        meta: { title: '反馈' }
       }
     ]
   },
@@ -100,8 +100,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
-    document.title = `${to.meta.title} - GQToDo`;
-    if (to.name == "home") document.title = "GQToDo";
+    document.title = `${to.meta.title} - Butterfly Knife`;
+    if (to.name == "home") document.title = "Butterfly Knife";
   }
   next();
 });
