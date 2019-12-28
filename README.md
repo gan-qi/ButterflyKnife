@@ -1,6 +1,6 @@
 <div style="text-align: center;">
-  <img src="../butterfly-knife/src/assets/logo.png" alt="logo">
-  <h1 style="margin-top: 20px;">Butterfly Knife</h1>
+  <img src="./src/assets/logo.png" alt="logo">
+  <div style="margin-top: 20px;text-align: center;font-size: 30px;">Butterfly Knife</div>
 </div>
 
 ## 简介
