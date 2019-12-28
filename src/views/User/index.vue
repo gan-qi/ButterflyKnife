@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div class="bg container">
     <div class="line">
       <panel-group />
     </div>

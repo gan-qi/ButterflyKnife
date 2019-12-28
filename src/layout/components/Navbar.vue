@@ -2,7 +2,7 @@
   <div class="bg">
     <ul>
       <li>
-        <a class="imgLogo"><img src="../assets/logo.png" class="imgLogo"/></a>
+        <a class="imgLogo"><img src="@/assets/logo.png" class="imgLogo"/></a>
       </li>
       <li>
         <router-link to="/" class="active">
@@ -34,11 +34,13 @@
           <a class="avatar">
             <el-dropdown>
               <span>
-                <img src="../assets/user.png" alt="avatar" class="avatar" />
+                <img src="@/assets/user.png" alt="avatar" class="avatar" />
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>修改密码</el-dropdown-item><br />
-                <el-dropdown-item @click="testFunc">账户注销</el-dropdown-item>
+                <span @click="logout">
+                  <el-dropdown-item>账户注销</el-dropdown-item>
+                </span>
               </el-dropdown-menu>
             </el-dropdown>
           </a>
@@ -52,10 +54,7 @@
 export default {
   methods: {
     logout() {
-      this.$route.push("/login");
-    },
-    testFunc() {
-      console.log("heihei");
+      this.$router.push("/login");
     }
   }
 };
@@ -66,7 +65,7 @@ div.bg {
   background-color: white;
 }
 img.imgLogo {
-  width: 40px;
+  width: 32px;
   height: 32px;
 }
 ul {
@@ -94,6 +93,7 @@ li a:not(.imgLogo):not(.avatar) {
 li a:hover {
   cursor: pointer;
   color: #303133;
+  background-color: #f2f2f2;
 }
 li a.active {
   color: #303133;

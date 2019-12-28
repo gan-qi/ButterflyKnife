@@ -1,5 +1,5 @@
 module.exports = {
-  title: "GQToDo",
+  title: "Butterfly Knife",
 
   /**
    * @type {boolean} true | false

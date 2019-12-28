@@ -1,5 +1,5 @@
 <template>
-  <div class="feedback">
+  <div class="feedback container">
     <div class="panel animated fadeInUpBig fast">
       <el-input
         type="textarea"
