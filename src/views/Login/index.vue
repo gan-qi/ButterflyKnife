@@ -13,9 +13,13 @@
             <span>登陆</span>
             <el-form ref="ruleForm" :model="form" :rules="rules">
               <el-form-item prop="name" required>
-                <el-input v-model="form.name" placeholder="用户名"></el-input>
+                <el-input
+                  v-model="form.name"
+                  placeholder="用户名"
+                  v-focus
+                ></el-input>
               </el-form-item>
-              <el-form-item prop="password" required>
+              <el-form-item prop="password">
                 <el-input
                   v-model="form.password"
                   type="password"
@@ -61,7 +65,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.form.name === "admin" && this.form.password === "admin") {
-            this.$store.commit("changeLoginStatus")
+            this.$store.commit("changeLoginStatus");
             this.$router.push("/");
           } else {
             this.$message.error("抱歉，登陆失败...");
@@ -73,6 +77,13 @@ export default {
     },
     register() {
       this.$router.push("/register");
+    }
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.querySelector("input").focus();
+      }
     }
   }
 };
