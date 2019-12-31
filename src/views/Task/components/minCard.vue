@@ -1,32 +1,39 @@
 <template>
   <div>
-    <draggable class="list-group" :list="cardData" group="task">
+    <draggable class="list-group" :list="cardData" group="task" @change="log">
       <div v-for="(item, index) in cardData" :key="index" class="card">
         <el-card>
           <el-row class="showSvg">
             <el-col :span="22">
               <div
                 class="taskInfo"
-                :style="{'color': item.color}"
-                @click="taskInfo(item)">
+                :style="{ color: item.color }"
+                @click="taskInfo(item)"
+              >
                 {{ item.title }}
               </div>
             </el-col>
             <el-col :span="2" class="closeSvg">
-              <svg-icon icon-class="close" @click="deleteTask(item)" />
+              <svg-icon icon-class="close" @click="deleteTaskBtn(item)" />
             </el-col>
           </el-row>
         </el-card>
       </div>
     </draggable>
 
-    <task-info :dialog="dialog" :form="taskInfoForm" @dialogchange="dialogchange" />
+    <task-info
+      :dialog="dialog"
+      :form="taskInfoForm"
+      @dialogchange="dialogchange"
+    />
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
 import taskInfo from "./taskInfo";
+
+import { deleteTask } from "../../../api/task";
 
 export default {
   props: {
@@ -59,26 +66,33 @@ export default {
       newTask: "",
       dialog: false,
       taskInfoForm: {
-        title: '',
-        desc: '',
-        color: ''
+        title: "",
+        desc: "",
+        color: ""
       }
     };
   },
   methods: {
-    deleteTask(data) {
+    deleteTaskBtn(data) {
       for (var i = 0; i < this.cardData.length; i++) {
-        if (this.cardData[i] === data) this.cardData.splice(i, 1);
+        if (this.cardData[i] === data) {
+          this.cardData.splice(i, 1);
+          // 后端删除
+          deleteTask(data.id);
+        }
       }
     },
     dialogchange(val) {
       this.dialog = val;
     },
     taskInfo(val) {
-      this.dialog = !this.dialog
-      this.taskInfoForm = val
+      this.dialog = !this.dialog;
+      this.taskInfoForm = val;
+    },
+    log(val) {
+      console.log(val);
     }
-  },
+  }
 };
 </script>
 

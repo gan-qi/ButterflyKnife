@@ -1,6 +1,6 @@
 <template>
   <div class="feedback container">
-    <div class="panel animated fadeInUpBig fast">
+    <div class="panel">
       <el-input
         type="textarea"
         :rows="10"
@@ -9,7 +9,11 @@
       >
       </el-input>
       <div class="footer">
-        <el-button type="primary" class="submitBtn" @click="onSubmit" :disabled="!data.length"
+        <el-button
+          type="primary"
+          class="submitBtn"
+          @click="onSubmit"
+          :disabled="!data.length"
           >提 交</el-button
         >
       </div>
@@ -18,7 +22,7 @@
 </template>
 
 <script>
-import animate from 'animate.css';
+import { saveFeedBack } from "../../api/feedback";
 
 export default {
   data() {
@@ -29,10 +33,15 @@ export default {
   methods: {
     onSubmit() {
       if (this.data.length != 0) {
-        console.log("submit!");
-        this.$message({
-          message: "提交反馈成功!",
-          type: "success"
+        var data = {
+          content: this.data
+        };
+        saveFeedBack(data).then(() => {
+          this.data = "";
+          this.$message({
+            message: "提交反馈成功!",
+            type: "success"
+          });
         });
       }
     }

@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { addTask } from "../../../api/task";
 import minCard from "./minCard";
 
 export default {
@@ -81,11 +82,17 @@ export default {
   },
   methods: {
     addTask() {
-      this.cardData.push({
+      var data = {
         title: this.newTask,
         desc: ""
+      };
+      //this.cardData.push(data);
+      //this.newTask = "";
+      // 后端添加信息
+      addTask(data).then(response => {
+        this.cardData.push(response.data);
+        this.newTask = "";
       });
-      this.newTask = "";
     }
   },
   created() {

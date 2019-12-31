@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item label="描述" :label-width="formLabelWidth">
             <div @click="focus" @blur="blurFunc">
-              <div v-if="status">
+              <div v-if="dialogStatus">
                 <vue-markdown :source="form.desc" />
               </div>
               <div v-else>
@@ -32,7 +32,9 @@
             <el-color-picker v-model="form.color"></el-color-picker>
           </el-form-item>
           <el-form-item label="日志" :label-width="formLabelWidth">
-            <p>日志</p>
+            <div v-for="(log, index) in logList" :key="index">
+              {{ log }}
+            </div>
           </el-form-item>
         </el-form>
         <div class="drawerFooter">
@@ -51,16 +53,19 @@
 
 <script>
 import VueMarkdown from "vue-markdown";
+import { changeTask } from "../../../api/task";
+
 export default {
   props: {
     form: {
       type: Object,
       default: function() {
         return {
+          id: 1,
           title: "task1",
           desc: "Hello, World !",
           color: "#FFF",
-          status: true
+          dialogStatus: true
         };
       }
     },
@@ -80,7 +85,7 @@ export default {
       localDialog: this.dialog,
       formLabelWidth: "80px",
       timer: null,
-      status: true
+      dialogStatus: true
     };
   },
   methods: {
@@ -89,31 +94,54 @@ export default {
         return;
       }
       this.$confirm("确定保存吗？")
+        // eslint-disable-next-line
         .then(_ => {
           this.loading = true;
           this.timer = setTimeout(() => {
             done();
             setTimeout(() => {
-              this.loading = false;
-              this.$emit("dialogchange", this.localDialog);
-              // 使mdEdit组件变为markdown形式展示
-              this.status = true;
+              // 提交修改给后端
+              var targetTaskNewData = {
+                title: this.form.title,
+                desc: this.form.desc,
+                color: this.form.color,
+                status: this.form.status
+              };
+              changeTask(targetTaskNewData, this.form.id).then(() => {
+                this.loading = false;
+                this.$emit("dialogchange", this.localDialog);
+                // 使mdEdit组件变为markdown形式展示
+                this.dialogStatus = true;
+              });
             }, 40);
           }, 200);
         })
+        // eslint-disable-next-line
         .catch(_ => {});
     },
     cancelForm() {
       this.loading = false;
       this.localDialog = false;
+      this.form.dialogStatus = true;
       clearTimeout(this.timer);
       this.$emit("dialogchange", this.localDialog);
     },
     focus() {
-      this.status = false;
+      this.dialogStatus = false;
     },
     blurFunc() {
-      this.status = true;
+      this.dialogStatus = true;
+    }
+  },
+  computed: {
+    logList() {
+      const list = [];
+      list.push(`${this.form.ctime} - 创建任务`);
+      if (this.form.dialogStatus === 1)
+        list.push(`${this.form.wtime} - 任务进行中`);
+      if (this.form.dialogStatus === 2)
+        list.push(`${this.form.etime} - 任务完成`);
+      return list;
     }
   },
   watch: {

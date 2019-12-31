@@ -119,7 +119,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // 监听登陆状态
-  console.log(to)
   if (store.state.login) {
     if (to.meta.title) {
       document.title = `${to.meta.title} - Butterfly Knife`;

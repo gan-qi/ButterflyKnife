@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { getTask } from "../../api/task.js";
 import card from "./components/card";
 
 export default {
@@ -49,48 +50,24 @@ export default {
           icon: "finish"
         }
       },
-      taskCard1: [
-        {
-          title: "task1",
-          desc: "Hello, World !",
-          color: "#F56C6C"
-        },
-        {
-          title: "task2",
-          desc: "Hello, World !",
-          color: "#67C23A"
-        },
-        {
-          title: "task3",
-          desc: "Hello, World !"
-        },
-        {
-          title: "task6",
-          desc: "Hello, World !"
-        },
-        {
-          title: "task7",
-          desc: "Hello, World !"
-        },
-        {
-          title: "task8",
-          desc: "Hello, World !"
-        }
-      ],
-      taskCard2: [
-        {
-          title: "task4",
-          desc: "Hello, World !",
-          color: "#67C23A"
-        }
-      ],
-      taskCard3: [
-        {
-          title: "task5",
-          desc: "Hello, World !"
-        }
-      ]
+      taskCard1: [],
+      taskCard2: [],
+      taskCard3: []
     };
+  },
+  methods: {
+    fetchData() {
+      getTask().then(response => {
+        response.data.forEach(item => {
+          if (item.status === 0) this.taskCard1.push(item);
+          if (item.status === 1) this.taskCard2.push(item);
+          if (item.status === 2) this.taskCard3.push(item);
+        });
+      });
+    }
+  },
+  created() {
+    this.fetchData();
   }
 };
 </script>
